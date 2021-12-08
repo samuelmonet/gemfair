@@ -1,0 +1,296 @@
+list name	name	label	cf	code	color
+Consentmain	1	Interview accepted			
+Consentmain	2	Interview refused			
+Consentmain	3	Household head absent (schedule another time)			
+Consent	1	Yes			
+Consent	2	No			
+emailconsent	1	Yes			
+emailconsent	2	No			
+yesno	1	Yes			
+yesno	2	No			
+yesnodk	1	Yes			
+yesnodk	2	No			
+yesnodk	99	Don't know			
+testvalid	1	Valid			
+testvalid	2	Test			
+gender	1	Male			blue
+gender	2	Female			pink
+rship	1	Spouse			
+rship	2	Brother 			
+rship	3	Sister			
+rship	4	Co-wife			
+rship	5	Son			
+rship	6	Daughter			
+rship	7	Other relative			
+marital	1	Married		1	white
+marital	2	Single		0	yellow
+marital	3	Divorced 		0	orange
+marital	4	Widowed  		0,5	darkgrey
+chiefdom	1	Fiama			
+chiefdom	2	Gbane			
+chiefdom	3	GbaneKandor			
+chiefdom	4	Gbense			
+chiefdom	5	GoramaKono			
+chiefdom	6	Kamara			
+chiefdom	7	Lei			
+chiefdom	8	Mafindor			
+chiefdom	9	Nimikoro			
+chiefdom	10	Nimiyama			
+chiefdom	11	Sandor			
+chiefdom	12	Soa			
+chiefdom	13	Tankoro			
+chiefdom	14	Toli			
+chiefdom	15	 Koidu			
+setting	0	Urban		1	grey
+setting	1	Rural		0	green
+mining_role	1	Casual labourer (kosovo)			
+mining_role	2	Digger			
+mining_role	3	Mine site manager			
+mining_role	4	Supported digger			
+mining_role	5	License holder			
+year_joined	1	2018			
+year_joined	2	2019			
+year_joined	3	2020			
+year_joined	4	2021			
+year_joined	99	Don't know			
+education	1	None		0	red
+education	2	Primary but incomplete		0,5	orange
+education	3	Primary complete		1	yellow
+education	4	Secondary incomplete		1,5	gold
+education	5	Secondary complete		2	lightgreen
+education	6	Post-secondary professional		2,5	grey
+education	7	Vocational		2	darkgrey
+education	8	First degree or more		3	green
+education	9	Koranic school		0,5	magenta
+education	99	Don't know		888	white
+land_rights	1	Private ownership			
+land_rights	2	Shared ownership			
+land_rights	3	Rental (from owner)			
+land_rights	4	Community ownership			
+land_rights	5	Other (specify)			
+land_rights	99	Don't know			
+land_use	1	Farming (crops, vegetables)			
+land_use	2	Agroforestry (trees)			
+land_use	3	Animal breeding (cattle, goat...)			
+land_use	4	Animal breeding (fish, bee…)			
+land_use	5	Rental (to tenant)			
+land_use	6	No usage at the moment			
+land_use	7	Other (specify)			
+land_use	99	Don't know			
+land2_use	1	Construction			
+land2_use	2	Mining			
+land2_use	3	Storage & Trade			
+land2_use	4	Manufacturing or Handicraft			
+land2_use	5	Rental (to tenant)			
+land2_use	6	No usage at the moment			
+land2_use	7	Community field			
+land2_use	8	Other (specify)			
+land2_use	99	Don't know			
+ydtd	1	Yes			
+ydtd	2	Didn't need to			
+ydtd	3	Tried, but could not			
+ydtd	99	Don't know			
+probs	1	Scarcity of food in the market			
+probs	2	Cost of food increasing			
+probs	3	Less money to buy food			
+probs	4	Other (specify)			
+probs	99	Don't know			
+worsen	1	Yes, very much		-2	red
+worsen	2	Yes, a little bit		-1	orange
+worsen	3	Not really, because we received support		0	yellow
+worsen	4	Not really, because we weren't affected		1	green
+worsen	99	Don't know		888	grey
+problems	1	Scarcity of food in the market			
+problems	2	Cost of food increasing			
+problems	3	Less money to buy food			
+problems	4	Other (specify)			
+problems	99	Don't know			
+food_situation	1	It is even worse than last year		-1	red
+food_situation	2	It is as bad as last year		0	orange
+food_situation	3	It is better than last year, but not yet back to normal		1	yellow
+food_situation	4	It is now back to normal		2	green
+food_situation	99	Don't know		888	grey
+watersource	1	Tap/piped water			
+watersource	2	Borehole			
+watersource	3	Protected well/spring			
+watersource	4	Rain water			
+watersource	5	Gravity flow scheme			
+watersource	6	Water truck/vendor			
+watersource	7	Other (specify)			
+watersource	99	Don't know			
+month	5	May			
+month	6	June			
+month	7	July			
+month	8	August			
+month	9	September			
+month	10	October			
+month	11	November			
+month	12	December			
+disp_times	1	Only one movement from the place of origin and now			
+disp_times	2	Two or more movement from the place of origin and now			
+disp_times	3	Don’t remember			
+disp_times	4	Don’t want to answer			
+ynd	1	Yes			
+ynd	2	No			
+ynd	3	Don't know			
+change	1	Increased			
+change	2	Remained the same			
+change	3	Decreased			
+change_inc	1	Very unstable		-2	red
+change_inc	2	Unstable		-1	orange
+change_inc	3	Somewhat stable		0	yellow
+change_inc	4	Stable		1	lightgreen
+change_inc	5	Very stable		2	green
+change_inc	99	Don't know		888	grey
+incomesource	1	Mining			
+incomesource	2	Agriculture			
+incomesource	3	Animal breeding			
+incomesource	4	Hunting & Fishing			
+incomesource	5	Sales & Trade			
+incomesource	6	Services			
+incomesource	7	Debt			
+incomesource	8	Other			
+incomesource	9	None in particular			
+incomesource	99	Don't know			
+incomecat	1	Food			
+incomecat	2	Health			
+incomecat	3	Children			
+incomecat	4	House			
+incomecat	5	Family obligations			
+incomecat	6	Mining			
+incomecat	7	Agriculture & Livestock			
+incomecat	8	Transport & Communication			
+incomecat	9	Fun			
+incomecat	10	Savings			
+incomecat	11	Debt reimbrusement			
+incomecat	12	Other			
+incomecat	99	Don't know			
+support	1	Cash for work			
+support	2	Cash transfer, no work required			
+support	3	Food for work			
+support	4	Food, no work required			
+support	5	Medicine or medical supplies			
+support	6	Micro-loans			
+support	7	Other in-kind transfers (seeds, bednets, livestock)			
+support	99	Don't know			
+better	1	A lot worst off		-2	red
+better	2	A little worst off		-1	orange
+better	3	No big change		0	yellow
+better	4	A little better off		1	lightgreen
+better	5	A lot better off		2	green
+better	99	Don't know		888	grey
+richer	1	Much poorer		-2	red
+richer	2	A little poorer		-1	orange
+richer	3	Average		0	yellow
+richer	4	A little richer		1	lightgreen
+richer	5	Much richer		2	green
+richer	99	Don't know		888	grey
+wealthy	1	Much less wealthy		-2	red
+wealthy	2	A little less wealthy		-1	orange
+wealthy	3	No change		0	yellow
+wealthy	4	A little wealthier		1	lightgreen
+wealthy	5	A lot wealthier		2	green
+wealthy	99	Don't know		888	grey
+workingtime	1	I work much less		2	green
+workingtime	2	I work a little less		1	lightgreen
+workingtime	3	I work the same amount of time		0	yellow
+workingtime	4	I work a little more		-1	orange
+workingtime	5	I work much more		-2	red
+workingtime	99	Don't know		888	grey
+secondjob_name	1	Farming			
+secondjob_name	2	Animal breeding			
+secondjob_name	3	Trade or Services			
+secondjob_name	4	Construction or Technical (repairs etc.)			
+secondjob_name	5	Other (specify)			
+secondjob_name	99	Don't know			
+sitetime	1	Less than 1 month		0	
+sitetime	2	1 to 6 months		0,25	
+sitetime	3	6 to 12 months		0,75	
+sitetime	4	1 to 5 years		2	
+sitetime	5	I always worked at the same site		5	
+sitetime	99	Don't know		888	
+nolicense	1	It is too expensive			
+nolicense	2	It is too complicated			
+nolicense	3	In practice nobody checks, so I Don't need one			
+nolicense	4	Other (specify)			
+nolicense	99	Don't know			
+childwork	1	Panning			
+childwork	2	Pulling			
+childwork	3	Transporting (water or ore)			
+childwork	4	Crushing (by hand)			
+childwork	5	Small errands			
+childwork	6	Vendors			
+childwork	7	Childcare for younger siblings			
+childwork	8	Other (specify)			
+childwork	99	Don't know			
+resp	1	Shelter			
+resp	2	1 meal per day			
+resp	3	2 meals per day			
+resp	4	Death expenses			
+resp	5	Healthcare costs			
+resp	6	Urgent healthcare (e.g. accident)			
+resp	7	Money			
+resp	8	Transport			
+resp	99	Don't know			
+compensation	1	Daily salary			
+compensation	2	Share of profits			
+compensation	3	Food			
+compensation	99	Don't know			
+buyers	1	Just the one I have good relationship with			
+buyers	2	Just GemFair			
+buyers	3	Two or three			
+buyers	4	Two or three, including GemFair			
+buyers	5	More than three			
+buyers	6	More than three, including GemFair			
+buyers	99	Don't know			
+price_vary1	1	Not really		0	green
+price_vary1	2	A little		1	orange
+price_vary1	3	A lot		2	red
+price_vary1	4	A little for some types of stones, a lot for other types		0,5	yellow
+price_vary1	99	Don't know		888	grey
+price_vary2	1	Not really		0	green
+price_vary2	2	A little		1	orange
+price_vary2	3	A lot		2	red
+price_vary2	4	A little for some types of stones, a lot for other types		0,5	yellow
+price_vary2	99	Don't know		888	grey
+accident	1	Crushing injury			
+accident	2	Hit by a flying object 			
+accident	3	Hit by someone			
+accident	4	 Falling			
+accident	5	Squashing/jamming of body part in machinery			
+accident	6	Other: specify			
+accident	99	 Don't know			
+debt_freq	1	Never or almost never		0	green
+debt_freq	2	A few times		0,5	yellow
+debt_freq	3	Many times		1	orange
+debt_freq	4	Very often or always		1,5	red
+debt_freq	99	Don't know		888	grey
+csi	1	Quite often/ consistently			
+csi	2	Sometimes			
+csi	3	Not too often/ A few times			
+csi	4	Rarely/Never			
+csi	99	Don't know			
+currency	sll	Sierra Leonean Leone			
+currency	usd	USD			
+leveloffinancing	1	It has decreased a lot		-2	red
+leveloffinancing	2	It has decreased a little		-1	orange
+leveloffinancing	3	There hasn't been much change		0	yellow
+leveloffinancing	4	It has increased a little		1	lightgreen
+leveloffinancing	5	It has increased a lot		2	green
+leveloffinancing	99	Don't know		888	grey
+leveloffinancing		0		888	darkgrey
+coverdailywage	1	Meals			
+coverdailywage	2	Transport			
+coverdailywage	3	Medical care			
+coverdailywage	4	Other(please specify)			
+minorprofile	1	Kosovo			
+minorprofile	2	Supported digger			
+minorprofile	3	Digger			
+minorprofile	4	Site Manager			
+minorprofile	5	Licence Holder			
+yesnodkf10	1	Yes			
+yesnodkf10	2	No			
+yesnodkf10	3	Currently applying for one			
+FCS		Acceptable		2	green
+FCS		Borderline		1	yellow
+FCS		Poor		0	red
