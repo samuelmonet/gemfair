@@ -32,13 +32,11 @@ st.set_page_config(layout="wide")
 @st.cache
 def load_data():
 	data = pd.read_csv('viz.csv',sep='\t')
-	data['flee_reason']=data['flee_reason'].apply(lambda x:'Returnee or Host' if x=='0' else x)
-	data['know_leader']=data['know_leader'].apply(lambda x:'Not IDP' if x=='0' else x)
-	data['member_EES']=data['member_EES'].apply(lambda x:'Neither IDP nor Returnee Refugee' if x=='0' else x)
-	
+	data['financemining']=data['financemining'].apply(lambda x:'Casual labourer' if x=='0' else x)
+	data['year_joined']=data['year_joined'].apply(lambda x:'Never joined Gemfair' if x==0 else str(x))
 	return data
 
-datas=load_data()
+data=load_data()
 
 #st.dataframe(correl)
 #st.write(data.columns)
@@ -122,6 +120,7 @@ def sankey_graph(data,L,height=600,width=1600):
       color = color_links))])
     return fig
 
+@st.cache
 def count2(abscisse,ordonnée,dataf,title='',legendtitle='',xaxis=''):
     
     agg=dataf[[abscisse,ordonnée]].groupby(by=[abscisse,ordonnée]).aggregate({abscisse:'count'}).unstack().fillna(0)
@@ -131,23 +130,21 @@ def count2(abscisse,ordonnée,dataf,title='',legendtitle='',xaxis=''):
     x=agg.index
     
     if ordonnée.split(' ')[0] in codes['list name'].values:
-        colors_code=codes[codes['list name']==ordonnée.split(' ')[0]].sort_values(['coding'])
+        colors_code=codes[codes['list name']==ordonnée.split(' ')[0]].sort_values(['code'])
         labels=colors_code['label'].tolist()
         colors=colors_code['color'].tolist()
         fig = go.Figure()
         #st.write(labels,colors)
         for i in range(len(labels)):
-            if labels[i] in dataf[ordonnée].unique():
+            if labels[i] in data[ordonnée].unique():
                 fig.add_trace(go.Bar(x=x, y=agg[(abscisse,labels[i])], name=labels[i],\
                            marker_color=colors[i].lower(),customdata=agg2[(abscisse,labels[i])],textposition="inside",\
                            texttemplate="%{customdata} %",textfont_color="black"))
         
     else:
-        fig = go.Figure(go.Bar(x=x, y=agg.iloc[:,0], name=agg.columns.tolist()[0][1],marker_color='green',customdata=agg2.iloc[:,0],textposition="inside",\
-                           texttemplate="%{customdata} %",textfont_color="black"))
+        fig = go.Figure(go.Bar(x=x, y=agg.iloc[:,0], name=agg.columns.tolist()[0][1],marker_color='green'))
         for i in range(len(agg.columns)-1):
-            fig.add_trace(go.Bar(x=x, y=agg.iloc[:,i+1], name=agg.columns.tolist()[i+1][1],customdata=agg2.iloc[:,i+1],textposition="inside",\
-                           texttemplate="%{customdata} %",textfont_color="black"))
+            fig.add_trace(go.Bar(x=x, y=agg.iloc[:,i+1], name=agg.columns.tolist()[i+1][1]))
     
     fig.update_layout(barmode='relative', \
                   xaxis={'title':xaxis,'title_font':{'size':18}},\
@@ -158,10 +155,11 @@ def count2(abscisse,ordonnée,dataf,title='',legendtitle='',xaxis=''):
         xanchor="right",
         x=1.01,font=dict(size=18),title=dict(font=dict(size=18))
     ))
-    #fig.update_layout(title_text=title)
+    fig.update_layout(title_text=title)
     
     return fig
 
+@st.cache
 def pourcent2(abscisse,ordonnée,dataf,title='',legendtitle='',xaxis=''):
     
     agg2=dataf[[abscisse,ordonnée]].groupby(by=[abscisse,ordonnée]).aggregate({abscisse:'count'}).unstack().fillna(0)
@@ -170,25 +168,21 @@ def pourcent2(abscisse,ordonnée,dataf,title='',legendtitle='',xaxis=''):
     x=agg2.index
     
     if ordonnée.split(' ')[0] in codes['list name'].values:
-        colors_code=codes[codes['list name']==ordonnée.split(' ')[0]].sort_values(['coding'])
+        colors_code=codes[codes['list name']==ordonnée.split(' ')[0]].sort_values(['code'])
         labels=colors_code['label'].tolist()
         colors=colors_code['color'].tolist()
         fig = go.Figure()
         
         for i in range(len(labels)):
-            if labels[i] in dataf[ordonnée].unique():
+            if labels[i] in data[ordonnée].unique():
                 fig.add_trace(go.Bar(x=x, y=agg[(abscisse,labels[i])], name=labels[i],\
                            marker_color=colors[i].lower(),customdata=agg2[(abscisse,labels[i])],textposition="inside",\
                            texttemplate="%{customdata} persons",textfont_color="black"))
         
     else:
-        #st.write(agg)
-        #st.write(agg2)
-        fig = go.Figure(go.Bar(x=x, y=agg.iloc[:,0], name=agg.columns.tolist()[0][1],marker_color='green',customdata=agg2.iloc[:,0],textposition="inside",\
-                           texttemplate="%{customdata} persons",textfont_color="black"))
+        fig = go.Figure(go.Bar(x=x, y=agg.iloc[:,0], name=agg.columns.tolist()[0][1],marker_color='green'))
         for i in range(len(agg.columns)-1):
-            fig.add_trace(go.Bar(x=x, y=agg.iloc[:,i+1], name=agg.columns.tolist()[i+1][1],customdata=agg2.iloc[:,i+1],textposition="inside",\
-                           texttemplate="%{customdata} persons",textfont_color="black"))
+            fig.add_trace(go.Bar(x=x, y=agg.iloc[:,i+1], name=agg.columns.tolist()[i+1][1]))
     
     fig.update_layout(barmode='relative', \
                   xaxis={'title':xaxis,'title_font':{'size':18}},\
@@ -199,7 +193,7 @@ def pourcent2(abscisse,ordonnée,dataf,title='',legendtitle='',xaxis=''):
         xanchor="right",
         x=1.01,font=dict(size=18),title=dict(font=dict(size=18))
     ))
-    #fig.update_layout(title_text=title)
+    fig.update_layout(title_text=title)
     
     return fig
 
@@ -216,11 +210,11 @@ questions.set_index('Idquest',inplace=True)
 correl=pd.read_csv('graphs.csv',sep='\t')
 #st.write(questions)
 text=[i for i in questions.columns if questions[i]['Treatment']=='text']
-text2=[questions[i]['question'] for i in text]
-#st.write(codes)
+text2=[questions[i]['question'] for i in text if 'recomm' not in i]+['Recommandation progamming','Recommandation activities'] 
+#st.write(text)
 
 img1 = Image.open("logoAxiom.png")
-img2 = Image.open("logoDRC.png")
+img2 = Image.open("gemfairLogo.png")
 
 def main():	
 	
@@ -228,72 +222,47 @@ def main():
 	st.sidebar.image(img1,width=200)
 	st.sidebar.title("")
 	st.sidebar.title("")
-	topic = st.sidebar.radio('Select what you want to see?',('General questions','Protection questions','Machine Learning results on questions C31, C32, E1 and E2','Livelihood questions','Wordclouds'))
+	topic = st.sidebar.radio('What do you want to do ?',('Display Machine Learning Results','Chiefdom results','Display other correlations'))
 	
 	title2,title3 = st.columns([5,2])
 	title3.image(img2)
 	
 	#st.write(questions)
-	#st.write(cat_cols)
-	if topic in ['General questions','Protection questions','Livelihood questions']:
+	#st.write(cat_cols)	
+	if topic=='Chiefdom results':
 		
-		title2.title('Correlations uncovered from the database:')
-		topics={'General questions':'general','Protection questions':'protection','Livelihood questions':'LH'}
-		quest=correl[correl['category']==topics[topic]].copy()
-		if topics[topic]=='protection':
-			data=datas[datas['section']=='Protection&CCM+(Respondent profile and Overall perception)'].copy()
-			title2.title('Protection questions')
-		elif topics[topic]=='LH':
-			data=datas[datas['section']=='FSL+(Respondent profile and Overall perception)'].copy()
-			title2.title('Livelihood questions')
-		else:
-			data=datas.copy()
-			title2.title('General questions')				
-		
-		
-		#st.write(correl)
+		quest=correl[correl['variable_x']=='chiefdom'].copy()
 		#st.write(quest)
+		
+		
+		
+		
+			
+	
+	if topic in ['Display other correlations','Chiefdom results']:
+		
+		
+		if topic=='Display other correlations':
+			quest=correl[-(correl['variable_x']=='chiefdom')].copy()
+			title2.title('Correlations uncovered from the database:')
+			title2.title('Other questions')
+		else:
+			quest=correl[correl['variable_x']=='chiefdom'].copy()
+			title2.title('Differences from one chiefdom to another:')
+		st.write('')
+		st.write('')
+		st.write('')
+		st.write('')
+		k=0
 		
 		
 		
 		for i in range(len(quest)):
 			
 			st.markdown("""---""")		
-			
-			if quest.iloc[i]['graphtype']=='map':
-				
-				st.subheader('Geographical repartition of responses to question:')
-				st.subheader(quest.iloc[i]['description'])
-				
-				dfmap=data[['position longitude','position latitude',quest.iloc[i]['variable_y']]]
-				dfmap['radius']=np.ones(len(dfmap))
-				dfmap['position']=dfmap.apply(lambda row: [row['position longitude'],row['position latitude']],axis=1)
-				
-				caracters=dfmap[quest.iloc[i]['variable_y']].unique().tolist()
-				n=len(caracters)
-				#st.write(caracters)
-				
-				layers=[pdk.Layer('ScatterplotLayer',dfmap[dfmap[quest.iloc[i]['variable_y']]==caracters[k]],\
-				pickable=True,
-    				opacity=0.8,
-    				stroked=True,
-    				filled=True,
-    				auto_highlight=True,
-    				radius_scale=6,
-    				radius_min_pixels=5,
-    				radius_max_pixels=6,\
-				get_position='position',\
-				get_fill_color=[int(k*255/(n-1)),int(255-k*255/(n-1)), 0,180],get_radius="radius",) for k in range(n)]
-				
-				st.pydeck_chart(pdk.Deck(map_style='mapbox://styles/mapbox/light-v9',\
-				initial_view_state=pdk.ViewState(latitude=9.566,longitude=31.678,zoom=15,height=600),\
-				layers=layers,))
-				
-				st.caption('Yes:Green - No:Red')
-				st.write(quest.iloc[i]['description'])
-						
-			elif quest.iloc[i]['variable_x'] in cat_cols or quest.iloc[i]['variable_y'] in cat_cols:
-				
+			if quest.iloc[i]['variable_x'] in cat_cols or quest.iloc[i]['variable_y'] in cat_cols:
+
+					
 				if quest.iloc[i]['variable_x'] in cat_cols:
 					cat,autre=quest.iloc[i]['variable_x'],quest.iloc[i]['variable_y']
 				else:
@@ -316,563 +285,192 @@ def main():
 				
 				#st.write(quest.iloc[i]['graphtype'])
 						
+				if quest.iloc[i]['graphtype']=='treemap':
+					
+					fig=px.treemap(df, path=[quest.iloc[i]['variable_x'], quest.iloc[i]['variable_y']],\
+					 values='persons')
+					fig.update_layout(title_text=quest.iloc[i]['title'],font=dict(size=20))
+					st.write(quest.iloc[i]['description'])
+					st.plotly_chart(fig,use_container_width=True)
+					k=0
+					
+					
+				elif quest.iloc[i]['graphtype']=='sunburst':
+					fig = px.sunburst(df.fillna(''), path=[quest.iloc[i]['variable_x'], quest.iloc[i]['variable_y']], values='persons',color=quest.iloc[i]['variable_y'])
+					fig.update_layout(title_text=quest.iloc[i]['title'],font=dict(size=20))
+					st.plotly_chart(fig,use_container_width=True)
+					st.write(quest.iloc[i]['description'])
+					
+					k+=1
+			
+			elif quest.iloc[i]['variable_y2']==quest.iloc[i]['variable_y2'] and quest.iloc[i]['graphtype']=='violin':
+				#st.write(quest.iloc[i]['variable_y2'])
+				source=quest.iloc[i]['variable_y'][4:]
+				df1=data[[quest.iloc[i]['variable_x'],quest.iloc[i]['variable_y']]]
+				df2=data[[quest.iloc[i]['variable_x'],quest.iloc[i]['variable_y2']]]
+				df1.columns=[quest.iloc[i]['variable_x'],source]
+				df2.columns=[quest.iloc[i]['variable_x'],source]
+				df1['Season']=np.full(len(df1),'Rainy season')
+				df2['Season']=np.full(len(df2),'Dry season')
+				df=df1.append(df2)
 									
-			else:	
-				df=data[[quest.iloc[i]['variable_x'],quest.iloc[i]['variable_y']]].copy()
-				df['persons']=np.ones(len(df))
+				if quest.iloc[i]['variable_x']=='chiefdom':
+					pointpos_un = [-0.9,-0.8,-1,-0.65,-0.75]
+					pointpos_deux = [0.75,0.75,1,0.7,0.75]
+					show_legend = [True,False,False,False,False]
+				else:
+					pointpos_un = [-0.9,-0.4,-0.3,-0.2]
+					pointpos_deux = [0.8,0.4,0.3,0.2]
+					show_legend = [True,False,False,False]
 				
-			if quest.iloc[i]['graphtype']=='sunburst':
-				st.subheader(quest.iloc[i]['title'])
-				fig = px.sunburst(df.fillna(''), path=[quest.iloc[i]['variable_x'], quest.iloc[i]['variable_y']], values='persons',color=quest.iloc[i]['variable_y'])
-				#fig.update_layout(title_text=quest.iloc[i]['variable_x'] + ' and ' +quest.iloc[i]['variable_y'],font=dict(size=20))
-				st.plotly_chart(fig,size=1000)
-				
-			elif quest.iloc[i]['graphtype']=='treemap':
-					
-				st.subheader(quest.iloc[i]['title'])
-				fig=px.treemap(df, path=[quest.iloc[i]['variable_x'], quest.iloc[i]['variable_y']], values='persons')
-				#fig.update_layout(title_text=quest.iloc[i]['title'],font=dict(size=20))
-				
-				st.plotly_chart(fig,use_container_width=True)
-				st.write(quest.iloc[i]['description'])
-				k=0
-				
-					
-			elif quest.iloc[i]['graphtype']=='violin':
-					
-				st.subheader(quest.iloc[i]['title'])
-				col1,col2=st.columns([1,1])
 				fig = go.Figure()
 				
-				if quest.iloc[i]['variable_x'].split(' ')[0] in codes['list name'].unique():
-					categs = codes[codes['list name']==quest.iloc[i]['variable_x'].split(' ')[0]].sort_values(by='coding')['label'].tolist()				
-					
-				else:
-					categs = df[quest.iloc[i]['variable_x']].unique()
-				for categ in categs:
-				    fig.add_trace(go.Violin(x=df[quest.iloc[i]['variable_x']][df[quest.iloc[i]['variable_x']] == categ],
-                            		y=df[quest.iloc[i]['variable_y']][df[quest.iloc[i]['variable_x']] == categ],
-                            		name=categ,
-                            		box_visible=True,
-                           			meanline_visible=True,points="all",))
-				fig.update_layout(showlegend=False)
-				fig.update_yaxes(range=[-0.1, df[quest.iloc[i]['variable_y']].max()+1],title=quest.iloc[i]['ytitle'])
-					
+				for k in range(0,len(pd.unique(df[quest.iloc[i]['variable_x']]))):
+					fig.add_trace(go.Violin(x=df[quest.iloc[i]['variable_x']][(df['Season'] == 'Rainy season') &
+                                        	(df[quest.iloc[i]['variable_x']] == pd.unique(df[quest.iloc[i]['variable_x']])[k])],
+                           	 		y=df[source][(df['Season'] == 'Rainy season')&
+                                              (df[quest.iloc[i]['variable_x']] == pd.unique(df[quest.iloc[i]['variable_x']])[k])],
+                            			legendgroup='Rainy season', scalegroup='Rainy season', name='Rainy season',
+                            			side='negative',
+                            			pointpos=pointpos_un[k], # where to position points
+                            			line_color='blue',
+                            			showlegend=show_legend[k])
+             					)
+					fig.add_trace(go.Violin(x=df[quest.iloc[i]['variable_x']][(df['Season'] == 'Dry season') &
+                                        	(df[quest.iloc[i]['variable_x']] == pd.unique(df[quest.iloc[i]['variable_x']])[k])],
+                            			y=df[source][(df['Season'] == 'Dry season')&
+                                              (df[quest.iloc[i]['variable_x']] == pd.unique(df[quest.iloc[i]['variable_x']])[k])],
+                            			legendgroup='Dry season', scalegroup='Dry season', name='Dry season',
+                            			side='positive',
+                            			pointpos=pointpos_deux[k],
+                            			line_color='gold',
+                            			showlegend=show_legend[k])
+             					)
+				
+				
+				# update characteristics shared by all traces
+				fig.update_traces(meanline_visible=True,
+                  		points='all', # show all points
+                  		jitter=0.05,  # add some jitter on points for better visibility
+                  		scalemode='count') #scale violin plot area with total count
+				fig.update_layout(
+    				title_text=quest.iloc[i]['title'],font=dict(size=20)
+    				)
+				fig.update_layout(
+   				 yaxis_title=quest.iloc[i]['ytitle'])
+				fig.update_layout(
+   				 xaxis_title=quest.iloc[i]['xtitle'])
 				st.plotly_chart(fig,use_container_width=True)
+				
 				st.write(quest.iloc[i]['description'])
+			
+			elif quest.iloc[i]['variable_y2']==quest.iloc[i]['variable_y2'] and quest.iloc[i]['graphtype']=='box':
+				#st.write(quest.iloc[i]['variable_y2'])
+				source=quest.iloc[i]['variable_y'][4:]
+				df1=data[[quest.iloc[i]['variable_x'],quest.iloc[i]['variable_y']]]
+				df2=data[[quest.iloc[i]['variable_x'],quest.iloc[i]['variable_y2']]]
+				df1.columns=[quest.iloc[i]['variable_x'],source]
+				df2.columns=[quest.iloc[i]['variable_x'],source]
+				df1['Season']=np.full(len(df1),'Rainy season')
+				df2['Season']=np.full(len(df2),'Dry season')
+			
+				
+				fig = go.Figure()
+				
+				fig.add_trace(go.Box(
+    				y=df1[source],
+    				x=df1[quest.iloc[i]['variable_x']],
+    				name='Rainy season',
+    				marker_color='blue'
+				))
+				fig.add_trace(go.Box(
+   				y=df2[source],
+    				x=df2[quest.iloc[i]['variable_x']],
+    				name='Dry season',
+    				marker_color='gold'
+				))
+				fig.update_layout(
+   				 yaxis_title=quest.iloc[i]['ytitle'],
+    				boxmode='group' # group together boxes of the different traces for each value of x
+				)
+				st.plotly_chart(fig,use_container_width=True)
+				
+				
+				st.write(quest.iloc[i]['description'])
+						
+			else:	
+				df=data[[quest.iloc[i]['variable_x'],quest.iloc[i]['variable_y']]]
+				df['persons']=np.ones(len(df))
+				
+				if quest.iloc[i]['graphtype']=='sunburst':
+					fig = px.sunburst(df.fillna(''), path=[quest.iloc[i]['variable_x'], quest.iloc[i]['variable_y']], values='persons',color=quest.iloc[i]['variable_y'])
+					fig.update_layout(title_text=quest.iloc[i]['variable_x'] + ' and ' +quest.iloc[i]['variable_y'],font=dict(size=20))
+					st.plotly_chart(fig,size=1000)
+					st.write(quest.iloc[i]['description'])
+					
+				elif quest.iloc[i]['graphtype']=='treemap':
+					fig=px.treemap(df, path=[quest.iloc[i]['variable_x'], quest.iloc[i]['variable_y']], values='persons')
+					fig.update_layout(title_text=quest.iloc[i]['title'],font=dict(size=20))
+					st.plotly_chart(fig,use_container_width=True)
+					st.write(quest.iloc[i]['description'])
+					k=0
+				
+				elif quest.iloc[i]['graphtype']=='box':
+					fig = px.box(df, x=quest.iloc[i]['variable_x'], y=quest.iloc[i]['variable_y'],points='all')	
+					fig.update_layout(title_text=quest.iloc[i]['title'],font=dict(size=20))
+					fig.update_yaxes(range=[0, 1000000],title=dict(text=quest.iloc[i]['ytitle'],font=dict(size=14)))
+					fig.update_layout(barmode='relative', \
+                  				xaxis={'title':quest.iloc[i]['xtitle'],'title_font':{'size':18}},\
+                  				yaxis={'title':quest.iloc[i]['ytitle'],'title_font':{'size':18}})
+					st.plotly_chart(fig,use_container_width=True)
+					st.write(quest.iloc[i]['description'])
+					
+				elif quest.iloc[i]['graphtype']=='violin':
+					col1,col2=st.columns([1,1])
+					fig = go.Figure()
+
+					categs = data[quest.iloc[i]['variable_x']].unique()
+					if quest.iloc[i]['filtermin']==quest.iloc[i]['filtermin']:
+						#st.write(quest.iloc[i]['filtermin'])
+						df=df[df[quest.iloc[i]['variable_y']]>=quest.iloc[i]['filtermin']]
+					if quest.iloc[i]['filtermax']==quest.iloc[i]['filtermax']:
+						#st.write(quest.iloc[i]['filtermax'])
+						df=df[df[quest.iloc[i]['variable_y']]<=quest.iloc[i]['filtermax']]
+
+					for categ in categs:
+					    fig.add_trace(go.Violin(x=df[quest.iloc[i]['variable_x']][df[quest.iloc[i]['variable_x']] == categ],
+                            			y=df[quest.iloc[i]['variable_y']][df[quest.iloc[i]['variable_x']] == categ],
+                            			name=categ,
+                            			box_visible=True,
+                            			meanline_visible=True,points="all",))
+					fig.update_layout(title_text=quest.iloc[i]['title'],font=dict(size=20),showlegend=False)
+					fig.update_yaxes(range=[df[quest.iloc[i]['variable_y']].min(), df[quest.iloc[i]['variable_y']].max()+1],title=dict(text=quest.iloc[i]['ytitle'],font=dict(size=14)))
+					st.plotly_chart(fig,use_container_width=True)
+					st.write(quest.iloc[i]['description'])
 									
-			elif quest.iloc[i]['graphtype']=='bar':
-					
-				st.subheader(quest.iloc[i]['title'])
-				
-				col1,col2=st.columns([1,1])
-
-				fig1=count2(quest.iloc[i]['variable_x'],quest.iloc[i]['variable_y'],\
-				df,xaxis=quest.iloc[i]['xtitle'])
-				#fig1.update_layout(title_text=quest.iloc[i]['title'],font=dict(size=20),showlegend=True,xaxis_tickangle=45)
-				col1.plotly_chart(fig1,use_container_width=True)
-					
-				fig2=pourcent2(quest.iloc[i]['variable_x'],quest.iloc[i]['variable_y'],\
-				df,xaxis=quest.iloc[i]['xtitle'])
-				#fig2.update_layout(title_text=quest.iloc[i]['title'],font=dict(size=20),showlegend=True,xaxis_tickangle=45)
-				col2.plotly_chart(fig2,use_container_width=True)
-				st.write(quest.iloc[i]['description'])
-				
-					
-			
-	
-	
-##############################################WORDCLOUDS##########################################################"						
+				elif quest.iloc[i]['graphtype']=='bar':
+					if quest.iloc[i]['variable_x']=='year_joined':
+						df=df[df['year_joined']!='Never joined Gemfair']
 						
-	elif topic=='Wordclouds':
-		
-		textgeneral=[questions[i]['question'] for i in ['target_right_explain', 'recomm1']]
-		textLH=[questions[i]['question'] for i in ['butchery_related_explain']]
-		
-		child=False
-		
-		x, y = np.ogrid[100:500, :600]
-		mask = ((x - 300)/2) ** 2 + ((y - 300)/3) ** 2 > 100 ** 2
-		mask = 255 * mask.astype(int)
-		
-		topicwc = st.sidebar.radio('Which question would you like to see?',('General questions','Protection questions','Livelihood question'))
-		
-		title2.title('Wordclouds for open questions')
-		
-		if topicwc=='Protection questions':
-			data=datas.fillna('')[datas['section']=='Protection&CCM+(Respondent profile and Overall perception)'].copy()
-			title2.title('Protection questions')
-			feature=st.sidebar.selectbox('Select the question for which you would like to visualize wordclouds of answers',[i for i in text2 if i not in textLH+textgeneral])
-		elif topicwc=='Livelihood question':
-			data=datas.fillna('')[datas['section']=='FSL+(Respondent profile and Overall perception)'].copy()
-			title2.title('Livelihood question')
-			feature=st.sidebar.selectbox('Select the question for which you would like to visualize wordclouds of answers',textLH)
-		else:
-			data=datas.fillna('').copy()
-			title2.title('General questions')
-			feature=st.sidebar.selectbox('Select the question for which you would like to visualize wordclouds of answers',textgeneral)
-		
-		#st.write(questions)
-		
-		if topicwc != 'General questions' or 'recomm' not in feature:
-			
-			var=[i for i in questions if questions[i]['question']==feature][0]
-			
-				
-			if var == 'discussed_CCCM':
-				df=data[data['attended_CCCM']=='Yes'].copy()
-			else:
-				df=data.copy()
-			
-			col1, col2, col3 = st.columns([1,4,1])
-			col2.title('Wordcloud from question:')
-			col2.title(feature)
-				
-		
-			corpus=' '.join(df[var].fillna('').apply(lambda x:'' if x=='0' else x))
-			corpus=re.sub('[^A-Za-z ]',' ', corpus)
-			corpus=re.sub('\s+',' ', corpus)
-			corpus=corpus.lower()
-		
-			col3.title('')
-			col3.title('')
-			col3.title('')
-			sw=col3.multiselect('Select words you would like to remove from the wordcloud \n\n', [i[0] for i in Counter(corpus.split(' ')).most_common() if i[0] not in STOPWORDS][:20])
-		
-			if corpus==' ':
-	    			corpus='No_response'
-			else:
-				corpus=' '.join([i for i in corpus.split(' ') if i not in sw])
-		
-			wc = WordCloud(background_color="#0E1117", repeat=False, mask=mask)		
-			wc.generate(corpus)
-			col2.image(wc.to_array(), use_column_width = True)	
-			
-			
-			if var=='target_right_explain':
-				a,b=st.columns([1,1])
-				corpus=' '.join(df[df['section']=='FSL+(Respondent profile and Overall perception)'][var].fillna('').apply(\
-				lambda x:'' if x=='0' else x))
-				corpus=re.sub('[^A-Za-z ]',' ', corpus)
-				corpus=re.sub('\s+',' ', corpus)
-				corpus=corpus.lower()
-				if corpus==' ' or corpus=='':
-					corpus='No_response'
-				else:
-					corpus=' '.join([i for i in corpus.split(' ') if i not in sw])
-				wclh = WordCloud(background_color="#0E1117", repeat=False, mask=mask)		
-				wclh.generate(corpus)
-				a.subheader('Livelihood beneficiaries')
-				a.image(wclh.to_array(), use_column_width = True)
-				
-				corpus=' '.join(df[df['section']=='Protection&CCM+(Respondent profile and Overall perception)'][var].fillna('').apply(\
-				lambda x:'' if x=='0' else x))
-				corpus=re.sub('[^A-Za-z ]',' ', corpus)
-				corpus=re.sub('\s+',' ', corpus)
-				corpus=corpus.lower()
-				if corpus==' ' or corpus=='':
-					corpus='No_response'
-				else:
-					corpus=' '.join([i for i in corpus.split(' ') if i not in sw])
-				wcprot = WordCloud(background_color="#0E1117", repeat=False, mask=mask)		
-				wcprot.generate(corpus)
-				b.subheader('Protection beneficiaries')
-				b.image(wcprot.to_array(), use_column_width = True)
-							
-				var2=questions[var]['parent']			
-				st.markdown("""---""")	
-				st.subheader('Wordclouds according to response to question : '+questions[var2]['question'])
-				st.markdown("""---""")	
-				
-				subcol1,subcol2=st.columns([2,2])
-				L=df[var2].unique()
-				
-				corpus1=corpus2=''
-				Corpuses=[corpus1,corpus2]
-				
-				for i in range(2):		
-			
-					Corpuses[i]=' '.join(df[df[var2]==L[i]][var].apply(lambda x:'' if x=='0' else x))
-					Corpuses[i]=re.sub('[^A-Za-z ]',' ', Corpuses[i])
-					Corpuses[i]=re.sub('\s+',' ', Corpuses[i])
-					Corpuses[i]=Corpuses[i].lower()
-					if Corpuses[i]==' ':
-    						Corpuses[i]='No_response'
-					else:
-						Corpuses[i]=' '.join([i for i in Corpuses[i].split(' ') if i not in sw])
-					wc2 = WordCloud(background_color="#0E1117", repeat=False, mask=mask)
-					wc2.generate(Corpuses[i])
-					if i==0:
-						subcol1.write(str(L[i])+' : '+str(len(df[df[var2]==L[i]]))+' '+'repondents')
-						subcol1.image(wc2.to_array(), use_column_width = True)
-					elif i==1:
-						subcol2.write(str(L[i])+' : '+str(len(df[df[var2]==L[i]]))+' '+'repondents')
-						subcol2.image(wc2.to_array(), use_column_width = True)
-				
-				subcol1.subheader('Livelihood beneficiaries')
-				subcol2.subheader('Protection beneficiaries')
-				
-				for sect in ['FSL+(Respondent profile and Overall perception)','Protection&CCM+(Respondent profile and Overall perception)']:
-					corpus1=corpus2=''
-					Corpuses=[corpus1,corpus2]
-					dfbis=df[df['section']==sect].copy()
-					for i in range(2):		
-			
-						Corpuses[i]=' '.join(dfbis[dfbis[var2]==L[i]][var].apply(lambda x:'' if x=='0' else x))
-						Corpuses[i]=re.sub('[^A-Za-z ]',' ', Corpuses[i])
-						Corpuses[i]=re.sub('\s+',' ', Corpuses[i])
-						Corpuses[i]=Corpuses[i].lower()
-						if Corpuses[i]==' ':
-    							Corpuses[i]='No_response'
-						else:
-							Corpuses[i]=' '.join([i for i in Corpuses[i].split(' ') if i not in sw])
 						
-					if sect=='FSL+(Respondent profile and Overall perception)':
-						wc2 = WordCloud(background_color="#0E1117", repeat=False, mask=mask)
-						wc2.generate(Corpuses[0])
-						subcol1.write(str(L[0])+' : '+str(len(dfbis[dfbis[var2]==L[0]]))+' '+'repondents')
-						subcol1.image(wc2.to_array(), use_column_width = True)
-						wc2 = WordCloud(background_color="#0E1117", repeat=False, mask=mask)
-						wc2.generate(Corpuses[1])
-						subcol1.write(str(L[1])+' : '+str(len(dfbis[dfbis[var2]==L[1]]))+' '+'repondents')
-						subcol1.image(wc2.to_array(), use_column_width = True)
-					else:
-						wc2 = WordCloud(background_color="#0E1117", repeat=False, mask=mask)
-						wc2.generate(Corpuses[0])
-						subcol2.write(str(L[0])+' : '+str(len(dfbis[dfbis[var2]==L[0]]))+' '+'repondents')
-						subcol2.image(wc2.to_array(), use_column_width = True)
-						wc2 = WordCloud(background_color="#0E1117", repeat=False, mask=mask)
-						wc2.generate(Corpuses[1])
-						subcol2.write(str(L[1])+' : '+str(len(dfbis[dfbis[var2]==L[1]]))+' '+'repondents')
-						subcol2.image(wc2.to_array(), use_column_width = True)
-				
-				if st.checkbox('Would you like to filter Wordcloud according to other questions'):		
+					col1,col2=st.columns([1,1])
+
+					fig1=count2(quest.iloc[i]['variable_x'],quest.iloc[i]['variable_y'],\
+					df,xaxis=quest.iloc[i]['xtitle'])
+					fig1.update_layout(title_text=quest.iloc[i]['title'],font=dict(size=20),showlegend=False)
+					col1.plotly_chart(fig1,use_container_width=True)
 					
-					
-					feature2=st.selectbox('Select one question to filter the wordcloud',\
-					[questions[i]['question'] for i in questions.columns if i not in text and i!='UniqueID'])		
-					filter2=[i for i in questions if questions[i]['question']==feature2][0]
-			
-					if filter2 in continues:
-						mini=int(data[filter2].fillna(0).min())
-						maxi=int(data[filter2].fillna(0).max())
-						minimum=st.slider('Select the minimum value you want to visulize', min_value=mini,max_value=maxi)
-						maximum=st.slider('Select the maximum value you want to visulize', min_value=minimum,max_value=maxi+1)
-						df=df[(df[filter2]>=minimum)&(df[filter2]<=maximum)]	
-				
-			
-					else:
-						filter3=st.multiselect('Select the responses you want to include', [i for i in data[filter2].unique()])
-						df=df[df[filter2].isin(filter3)]
-					
-					corpus=' '.join(df[var].apply(lambda x:'' if x=='0' else x))
-					corpus=re.sub('[^A-Za-z ]',' ', corpus)
-					corpus=re.sub('\s+',' ', corpus)
-					corpus=corpus.lower()
-			
-					if corpus==' ' or corpus=='':
-    						corpus='No_response'
-					else:
-						corpus=' '.join([i for i in corpus.split(' ') if i not in sw])
-		
-					wc = WordCloud(background_color="#0E1117", repeat=False, mask=mask)
-					wc.generate(corpus)
-					
-					col1, col2, col3 = st.columns([1,4,1])
-					col2.image(wc.to_array(), use_column_width = True)
-					
-					a,b=st.columns([1,1])
-					corpus=' '.join(df[df['section']=='FSL+(Respondent profile and Overall perception)'][var].fillna('').apply(\
-					lambda x:'' if x=='0' else x))
-					corpus=re.sub('[^A-Za-z ]',' ', corpus)
-					corpus=re.sub('\s+',' ', corpus)
-					corpus=corpus.lower()
-					if corpus==' ' or corpus=='':
-    						corpus='No_response'
-					else:
-						corpus=' '.join([i for i in corpus.split(' ') if i not in sw])
-					wclh = WordCloud(background_color="#0E1117", repeat=False, mask=mask)		
-					wclh.generate(corpus)
-					a.subheader('Livelihood beneficiaries')
-					a.image(wclh.to_array(), use_column_width = True)
-				
-					corpus=' '.join(df[df['section']=='Protection&CCM+(Respondent profile and Overall perception)'][var].fillna('').apply(\
-					lambda x:'' if x=='0' else x))
-					corpus=re.sub('[^A-Za-z ]',' ', corpus)
-					corpus=re.sub('\s+',' ', corpus)
-					corpus=corpus.lower()
-					if corpus==' ' or corpus=='':
-    						corpus='No_response'
-					else:
-						corpus=' '.join([i for i in corpus.split(' ') if i not in sw])
-					wcprot = WordCloud(background_color="#0E1117", repeat=False, mask=mask)		
-					wcprot.generate(corpus)
-					b.subheader('Protection beneficiaries')
-					b.image(wcprot.to_array(), use_column_width = True)
-								
-					var2=questions[var]['parent']			
-					st.markdown("""---""")	
-					st.subheader('Wordclouds according to response to question : '+questions[var2]['question'])
-					st.markdown("""---""")	
-				
-					subcol1,subcol2=st.columns([2,2])
-					L=df[var2].unique()
-				
-					corpus1=corpus2=''
-					Corpuses=[corpus1,corpus2]
-				
-					for i in range(2):		
-				
-						Corpuses[i]=' '.join(df[df[var2]==L[i]][var].apply(lambda x:'' if x=='0' else x))
-						Corpuses[i]=re.sub('[^A-Za-z ]',' ', Corpuses[i])
-						Corpuses[i]=re.sub('\s+',' ', Corpuses[i])
-						Corpuses[i]=Corpuses[i].lower()
-						if Corpuses[i]==' ':
-    								Corpuses[i]='No_response'
-						else:
-							Corpuses[i]=' '.join([i for i in Corpuses[i].split(' ') if i not in sw])
-							if Corpuses[i]=='':
-	    							Corpuses[i]='No_response'
-						wc2 = WordCloud(background_color="#0E1117", repeat=False, mask=mask)
-						wc2.generate(Corpuses[i])
-						if i==0:
-							subcol1.write(str(L[i])+' : '+str(len(df[df[var2]==L[i]]))+' '+'repondents')
-							subcol1.image(wc2.to_array(), use_column_width = True)
-						elif i==1:
-							subcol2.write(str(L[i])+' : '+str(len(df[df[var2]==L[i]]))+' '+'repondents')
-							subcol2.image(wc2.to_array(), use_column_width = True)
-				
-					subcol1.subheader('Livelihood beneficiaries')
-					subcol2.subheader('Protection beneficiaries')
-				
-					for sect in ['FSL+(Respondent profile and Overall perception)','Protection&CCM+(Respondent profile and Overall perception)']:
-						corpus1=corpus2=''
-						Corpuses=[corpus1,corpus2]
-						dfbis=df[df['section']==sect].copy()
-						for i in range(2):		
-			
-							Corpuses[i]=' '.join(dfbis[dfbis[var2]==L[i]][var].apply(lambda x:'' if x=='0' else x))
-							Corpuses[i]=re.sub('[^A-Za-z ]',' ', Corpuses[i])
-							Corpuses[i]=re.sub('\s+',' ', Corpuses[i])
-							Corpuses[i]=Corpuses[i].lower()
-							if Corpuses[i]==' ':
-    								Corpuses[i]='No_response'
-							else:
-								Corpuses[i]=' '.join([i for i in Corpuses[i].split(' ') if i not in sw])
-								if Corpuses[i]=='':
-	    								Corpuses[i]='No_response'
-						if sect=='FSL+(Respondent profile and Overall perception)':
-							wc2 = WordCloud(background_color="#0E1117", repeat=False, mask=mask)
-							wc2.generate(Corpuses[0])
-							subcol1.write(str(L[0])+' : '+str(len(dfbis[dfbis[var2]==L[0]]))+' '+'repondents')
-							subcol1.image(wc2.to_array(), use_column_width = True)
-							wc2 = WordCloud(background_color="#0E1117", repeat=False, mask=mask)
-							wc2.generate(Corpuses[1])
-							subcol1.write(str(L[1])+' : '+str(len(dfbis[dfbis[var2]==L[1]]))+' '+'repondents')
-							subcol1.image(wc2.to_array(), use_column_width = True)
-						else:
-							wc2 = WordCloud(background_color="#0E1117", repeat=False, mask=mask)
-							wc2.generate(Corpuses[0])
-							subcol2.write(str(L[0])+' : '+str(len(dfbis[dfbis[var2]==L[0]]))+' '+'repondents')
-							subcol2.image(wc2.to_array(), use_column_width = True)
-							wc2 = WordCloud(background_color="#0E1117", repeat=False, mask=mask)
-							wc2.generate(Corpuses[1])
-							subcol2.write(str(L[1])+' : '+str(len(dfbis[dfbis[var2]==L[1]]))+' '+'repondents')
-							subcol2.image(wc2.to_array(), use_column_width = True)
-					
-					
-					
-			
-			elif col2.checkbox('Would you like to filter Wordcloud according to other questions'):
-		
-				feature2=col2.selectbox('Select one question to filter the wordcloud',[questions[i]['question'] for i in questions.columns if i not in text and i!='UniqueID'])		
-				filter2=[i for i in questions if questions[i]['question']==feature2][0]
-			
-				if filter2 in continues:
-					mini=int(data[filter2].fillna(0).min())
-					maxi=int(data[filter2].fillna(0).max())
-					minimum=col2.slider('Select the minimum value you want to visulize', min_value=mini,max_value=maxi)
-					maximum=col2.slider('Select the maximum value you want to visulize', min_value=minimum,max_value=maxi+1)
-					df=df[(df[filter2]>=minimum)&(df[filter2]<=maximum)]	
-				
-			
-				else:
-					filter3=col2.multiselect('Select the responses you want to include', [i for i in data[filter2].unique()])
-					df=df[df[filter2].isin(filter3)]
-			
-				corpus=' '.join(df[var].apply(lambda x:'' if x=='0' else x))
-				corpus=re.sub('[^A-Za-z ]',' ', corpus)
-				corpus=re.sub('\s+',' ', corpus)
-				corpus=corpus.lower()
-			
-				if corpus==' ' or corpus=='':
-    					corpus='No_response'
-				else:
-					corpus=' '.join([i for i in corpus.split(' ') if i not in sw])
-		
-				wc = WordCloud(background_color="#0E1117", repeat=False, mask=mask)
-				wc.generate(corpus)
-				col2.image(wc.to_array(), use_column_width = True)
-				
-				
-			
-			
-			
-		
-			if questions[var]['parent'] in questions.columns and var!='target_right_explain':
-			
-				child=True		
-				var2=questions[var]['parent']
-				
-							
-				st.markdown("""---""")	
-				st.subheader('Wordclouds according to response to question : '+questions[var2]['question'])
-				st.markdown("""---""")	
-				if var2 not in ['feel_leader_transp','satistaftion CBPN','trust CBPN','satistaftion security_CBPN','rlptcomm']:
-					subcol1,subcol2=st.columns([1,1])
-				else:
-					subcol1,subcol2,subcol3=st.columns([1,1,1])
-			
-				L=df[var2].unique()
-				
-				corpus1=corpus2=corpus3=''
-				Corpuses=[corpus1,corpus2,corpus3]
-				
-				for i in range(len(L)):		
-			
-					Corpuses[i]=' '.join(df[df[var2]==L[i]][var].apply(lambda x:'' if x=='0' else x))
-					Corpuses[i]=re.sub('[^A-Za-z ]',' ', Corpuses[i])
-					Corpuses[i]=re.sub('\s+',' ', Corpuses[i])
-					Corpuses[i]=Corpuses[i].lower()
-					if Corpuses[i]==' ':
-    						Corpuses[i]='No_response'
-					else:
-						Corpuses[i]=' '.join([i for i in Corpuses[i].split(' ') if i not in sw])
-					wc2 = WordCloud(background_color="#0E1117", repeat=False, mask=mask)
-					wc2.generate(Corpuses[i])
-					if i==0:
-						subcol1.write(str(L[i])+' : '+str(len(df[df[var2]==L[i]]))+' '+'repondents')
-						subcol1.image(wc2.to_array(), use_column_width = True)
-					elif i==1:
-						subcol2.write(str(L[i])+' : '+str(len(df[df[var2]==L[i]]))+' '+'repondents')
-						subcol2.image(wc2.to_array(), use_column_width = True)
-					else:
-						subcol3.write(str(L[i])+' : '+str(len(df[df[var2]==L[i]]))+' '+'repondents')
-						subcol3.image(wc2.to_array(), use_column_width = True)
-		
-			
-			
-		
+					fig2=pourcent2(quest.iloc[i]['variable_x'],quest.iloc[i]['variable_y'],\
+					df,xaxis='')
+					fig2.update_layout(title_text='',legend_title=quest.iloc[i]['legendtitle'],showlegend=True)
+					col2.plotly_chart(fig2,use_container_width=True)
+					st.write(quest.iloc[i]['description'])	
 	
-		##########################################Traitement spécifique Recommandations#######################################################
-		else:
-			df=data.copy()
-			col1, col2, col3 = st.columns([1,1,1])
-			
-			colonnes=['recomm1','recomm2','recomm3']
-			st.title('Wordcloud from question:')
-			st.title('E4) What recommendations would you propose to improve the project activities?')
-			
-			st.title('')
-			st.title('')
-			st.title('')
-			
-			corpus=' '.join(data[colonnes[0]].dropna())+\
-				' '.join(data[colonnes[1]].dropna())+' '.join(data[colonnes[2]].dropna())
-			corpus=re.sub('[^A-Za-z ]',' ', corpus)
-			corpus=re.sub('\s+',' ', corpus)
-			corpus=corpus.lower()
-			sw=st.multiselect('Select words you would like to remove from the wordclouds \n\n', [i[0] for i in Counter(corpus.split(' ')).most_common() if i[0] not in STOPWORDS][:20])
-			
-			
-			for benef in ['All beneficiaries','Livelihood beneficiaries','Protection beneficiaries']:
-				if benef=='All beneficiaries':
-					df=datas.copy()
-				elif benef=='Livelihood beneficiaries':
-					df=datas[datas['section']=='FSL+(Respondent profile and Overall perception)']
-				else:
-					df=datas[datas['section']=='Protection&CCM+(Respondent profile and Overall perception)']
-				
-				st.subheader(benef)
 					
-				col1, col2, col3 = st.columns([1,1,1])
-					
-				for i in range(3):
-					col_corpus=' '.join(df[colonnes[i]].dropna())
-					col_corpus=re.sub('[^A-Za-z ]',' ', col_corpus)
-					col_corpus=re.sub('\s+',' ', col_corpus)
-					col_corpus=col_corpus.lower()
-					if col_corpus==' ' or col_corpus=='':
-			    			col_corpus='No_response'
-					else:
-						col_corpus=' '.join([i for i in col_corpus.split(' ') if i not in sw])		
-					wc = WordCloud(background_color="#0E1117", repeat=False, mask=mask)		
-					wc.generate(col_corpus)
-					if i==0:
-						col1.subheader('Recommandation 1')
-						col1.image(wc.to_array(), use_column_width = True)
-					elif i==1:
-						col2.subheader('Recommandation 2')	
-						col2.image(wc.to_array(), use_column_width = True)
-					else:
-						col3.subheader('Recommandation 3')
-						col3.image(wc.to_array(), use_column_width = True)		
-					
-			if st.checkbox('Would you like to filter Wordcloud according to other questions'):
-				
-				feature2=st.selectbox('Select one question to filter the wordcloud',[questions[i]['question'] for i in questions.columns if i not in text and i!='UniqueID'])		
-				filter2=[i for i in questions if questions[i]['question']==feature2][0]
-			
-				if filter2 in continues:
-					minimum=st.slider('Select the minimum value you want to visulize', 	min_value=datas[filter2].fillna(0).min(),max_value=data[filter2].fillna(0).max())
-					maximum=st.slider('Select the maximum value you want to visulize', min_value=minimum,max_value=datas[filter2].fillna(0).max())
-					df=datas[(datas[filter2]>=minimum)&(datas[filter2]<=maximum)]	
-
-				else:
-					filter3=st.multiselect('Select the responses you want to include', [i for i in datas[filter2].unique()])
-					df=datas[datas[filter2].isin(filter3)]
-				
-								
-				
-			
-				for benef in ['All beneficiaries','Livelihood beneficiaries','Protection beneficiaries']:
-					if benef=='All beneficiaries':
-						df2=df.copy()
-					elif benef=='Livelihood beneficiaries':
-						df2=df[df['section']=='FSL+(Respondent profile and Overall perception)']
-					else:
-						df2=df[df['section']=='Protection&CCM+(Respondent profile and Overall perception)']
-					
-					st.subheader(benef+' '+str(len(df2))+ ' persons')
-					
-					col1, col2, col3 = st.columns([1,1,1])
-					for i in range(3):
-						col_corpus=' '.join(df2[colonnes[i]].dropna())
-						col_corpus=re.sub('[^A-Za-z ]',' ', col_corpus)
-						col_corpus=re.sub('\s+',' ', col_corpus)
-						col_corpus=col_corpus.lower()
-						if col_corpus==' ' or col_corpus=='':
-				    			col_corpus='No_response'
-						else:
-							col_corpus=' '.join([i for i in col_corpus.split(' ') if i not in sw])		
-						wc = WordCloud(background_color="#0E1117", repeat=False, mask=mask)		
-						wc.generate(col_corpus)
-						if i==0:
-							col1.subheader('Recommandation 1')
-							col1.image(wc.to_array(), use_column_width = True)
-						elif i==1:
-							col2.subheader('Recommandation 2')	
-							col2.image(wc.to_array(), use_column_width = True)
-						else:
-							col3.subheader('Recommandation 3')
-							col3.image(wc.to_array(), use_column_width = True)	
-
-############################################mmmmmmmmmmmmmmmmmlllllllllllllllll#########################################################	
-			
-	elif topic=='Machine Learning results on questions C31, C32, E1 and E2':
+	elif topic=='Display Machine Learning Results':
 		
 		title2.title('Machine learning results on models trained on:')
-		title2.title('Questions C31, C32, E1 and E2')
+		title2.title('Questions E11,E12 and E13')
 		
 		
 		st.title('')
@@ -887,77 +485,33 @@ def main():
 		st.write('The coding for the responses is indicated under the graph and the interpretation of the graphs is written below.')
 		st.markdown("""---""")	
 				
-		temp = Image.open('changeincome.png')
+		temp = Image.open('shap1.png')
 		image = Image.new("RGBA", temp.size, "WHITE") # Create a white rgba background
 		image.paste(temp, (0, 0), temp)
-		st.subheader('C31) Since the DRC project my income has…')
+		st.subheader('Overall, do you consider your household better off than it was 3 or 4 years ago?')
 		st.image(image, use_column_width = True)
-		st.caption('Did not receive any skills training: Did not receive:1 - Did receive:0')
-		st.caption('Did not receive Multipurpose Cash Assistance: Did not receive:1 - Did receive:0')
-		st.caption('')
-		st.write('We can see that the main parameter for feeling that the level of income has increased is the Longitude of the person interviewed. This means that given that in Bentiu (the lowest longitude) people seems to be more confident that their income has increased since the DRC project.')
-		st.write('The comes the fact to have received skills training and/or multipurpose cash assistance. Those who received these are also more likely to believe their income has increased')
-		st.write('Finaly (but less obvious) people with the lowest incomes seems more likely to believe their income has increased')
 		
-		st.markdown("""---""")	
 		
-		temp = Image.open('changefoodsec.png')
+		
+		temp = Image.open('shap2.png')
 		image1 = Image.new("RGBA", temp.size, "WHITE") # Create a white rgba background
 		image1.paste(temp, (0, 0), temp)
-		st.subheader('C32) Since the DRC project the HHs food security has…')
+		st.subheader('Overall, do you consider your household richer or poorer than the people in this community?')
 		st.image(image1, use_column_width = True)		
-		st.caption('Did not receive any skills training: Did not receive:1 - Did receive:0')
-		st.caption('Member of Seed-Pressing Cooperative: Member:1 - Not a member:0')
-		st.caption('')
-		st.write('We find on top the fact to have being benefiting from Multipurpose Cash assistance')
-		st.write('Then the number of women and girls seems to be an important parameter probably since the project was mainly targeting women')
-		st.write('Finaly another important aspect is to be a member of a SPC.')
 		
-		st.markdown("""---""")	
 		
-		temp = Image.open('change2LH.png')
+		temp = Image.open('shap3.png')
 		image2 = Image.new("RGBA", temp.size, "WHITE") # Create a white rgba background
 		image2.paste(temp, (0, 0), temp)
-		st.subheader('E1) Because of the project, I am confident that my livelihood will')
+		st.subheader('Overall, do you think the GemFair program made your household less or more wealthy?')
 		st.image(image2, use_column_width = True)
-		st.caption('Member of Seed-Pressing Cooperative: Member:1 - Not a member:0')
-		st.caption('Did not receive any agricultural training: Did not receive:1 - Did receive:0')
-		st.caption('Do you know your camp/block leader: Yes:1 - No:0 - Not IDP:0')
-		st.caption('Marital status: Married:1 - Single:0 - Widowed:0 - Divorced: 0')
-		st.caption('')
-		st.write('This time this is the fact to be a member of Seed-Pressing Cooperative that has the main impact.')
-		st.write('Then we find again the number of women in the household')
-		st.write('Another important factor to feel confident in the fact that the livelihood will increase is the fact to have received agricultural training')
-		st.write('Knowing the camp/block leader seems more to be a burden for being optimistic but this is more to be linked with the fact that the model was treating equaly not IDPs and IDPS who were not knowing their leader, so this might better be interpretated as the fact that people who are not IDPs are more optimistics about the improvement of their livelihoods than IDPs. This seems corroborated with the fact that globally in Bentiu people are more optimisting than in Jamjang. In Bentiu most of people intrviewed are host while in Jamjang this is the opposite.')
-		st.write('Finaly married people are globaly more optimistic')
-		st.write('The level of cash assistance seems to have also a little impact but this is clearly less obvious than the short term improvement we saw just before')
 		
-		st.markdown("""---""")	
+
+
 		
-		temp = Image.open('change2foodsec.png')
-		image3 = Image.new("RGBA", temp.size, "WHITE") # Create a white rgba background
-		image3.paste(temp, (0, 0), temp)
-		st.subheader('41) Because of the project, my household’s access to food will')
-		st.image(image3, use_column_width = True)
-		st.caption('Do you know your camp/block leader: Yes:1 - No:0 - Not IDP:0')
-		st.caption('Member of Seed-Pressing Cooperative: Member:1 - Not a member:0')
-		st.caption('Did not receive any agricultural training: Did not receive:1 - Did receive:0')
-		st.caption('Did not receive any skills training: Did not receive:1 - Did receive:0')
-		st.caption('')
-		st.write('This time we find on top the fact to not know the camp leader and the fact to have been a member of a SPC. Most probably this has to be interpretated as the fact not to be an IDP. This further show the importance of SPCs')
-		st.write('Then comes the Longitude with once again people from Bentiu (the lowest longitude) who seem to be more confident that their food acess will increase thanks to the DRC project than people in Jamjam.')
-		st.write('The influence of income is not obvious but the composition of the family is. And what comes out is that large families and particularly families with many children under 5 feel less confident')
-		st.write('Skills training also seem to help people having conidence in their future.')
-		st.write('')
+		
 		
 		st.title('Conclusion/Recommandations')
-		
-		st.write('- Cash seems to be the best way to improve the condition of the households on the short term')
-		st.write('- For the long term, agricultural and skills trianing have been very much appreciated.')
-		st.write('- SPC seem also to play a very appreciated role in the communities.')
-		st.write('- On the long term, host communities seem to feel more confident.')
-		st.write('- Large household are probably more vulnerable, specialy those with an important number of children.')
-		
 		
 		
 		

@@ -1,24 +1,24 @@
-variable_x	variable_y	variable_y2	description	xtitle	ytitle	legendtitle	title	graphtype
-chiefdom	inc2 Agriculture	inc Agriculture		Chiefdom	Pourcentage of income from agriculture in the rainy season			violin
-chiefdom	inc2 Sales & Trade (non-mining)	inc Sales & Trade (non-mining)		Chiefdom	Pourcentage of income from sales and trade in the rainy season			violin
-chiefdom	inc2 Debt	inc Debt		Chiefdom	Pourcentage of income from debt in the rainy season			violin
-chiefdom	Inc2 Mining	Inc Mining	In Nimikoro people rely more on agriculture during the rainy season. They do not rely at all on debt or sales and trades. In Sandor, mining represents a higher part of the incomes during rainy season.	Chiefdom	Pourcentage of income from mining in the rainy season			violin
-chiefdom	inc3 Health			Chiefdom	Percentage use of income for health over the year			violin
-chiefdom	inc3 Debt		Once again we can see that in Nimikoro there is no problems of debts. We see also that health seems more of a problem in Kamara and Nimiyama	Chiefdom	Percentage use of income for debt over the year			violin
-chiefdom	FCS		In Kamara people seem a little bit more vulnerable	Chiefdom				bar
-prob_1	inc Animal breeding		almost all of those who get income form animal breeding during the dry season have seen their food situation worsenned because of COVID19	First most pressing problem	Pourcentage of income coming from animal breeding in rainy season			violin
-incomesource_1	richer		Those living pricipaly from agriculture and mining consider themselves globaly poorer than the rest of the community					bar
-incomesource_1	FCS		This is confirmed if we look at the FCS score					bar
-inc3 Health	FCS							bar
-inc3 Family obligations	FCS		People with the lowest FCS scores seem to have more expenses related to health and family obligations					bar
-year_joined	workingtime		People who joined the gemfair program seems to work a little more than before (specialy those who joined more recently)					bar
-year_joined	whealthy		They also seem to be a little whealthier than before					bar
-worsen	Hh total		Large households were more affected by the COVID crisis					violin
-worsen	secondjob_days4		people earning money from a second job during rainy season seem less affected					violin
-financemining	change_inc		When the mine site is prefinanced, people have less unstable incomes	Is your mine site prefinanced or supported?				bar
-richer	change_inc		The richer people consider themselves the more stable is their income					bar
-secondjob	FCS		Those with a second job have a lower FCS score					bar
-value_ind	minorprofile		The profile of the minor plays an important rôle in the percentage of a stone's value do you receive, individually, on average, for a normal (small) stone					
-chiefdom	gangpayment		In Sandor people seem to pay more for their gang					
-gf_site	difference		Workers in gemfair seems to have had more decrease in their daily wages					
-gf_site	bad_carats		People who do not work for gemfair expect more carats					
+variable_x	variable_y	variable_y2	description	xtitle	ytitle	legendtitle	title	graphtype	filtermin	filtermax
+chiefdom	inc2 Agriculture	inc Agriculture	In Sandor and Gbense minors are much less relying on agriculture.	Chiefdom	Percentage of income coming from<br> agriculture (dry and rainy season)		Percentage of income providing from agriculture according to chiefdom	violin		
+chiefdom	inc2 Sales & Trade (non-mining)	inc Sales & Trade (non-mining)	In Nimikoro and Gbense minors are not participating in activities in relation to sales and trade.	Chiefdom	Percentage of income coming from<br> sales (dry and rainy season)		Percentage of income providing from sales and trade according to chiefdom	box		
+chiefdom	inc2 Debt	inc Debt	In Nimikoro and Gbense minors do not seem to have many debts.	Chiefdom	Percentage of income coming from debts (dry and rainy season)		Percentage of income providing from debts according to chiefdom	box		
+chiefdom	inc2 Mining	inc Mining	In Sandor and Gbense minors are much more relying exclusively on mining.	Chiefdom	Percentage of income coming from<br> mining (dry and rainy season)		Percentage of income providing from mining according to chiefdom	violin		
+chiefdom	inc3 Health		Health expenses seem significantly higher in Kamara and Nimiyama	Chiefdom	Percentage use of income for health over the year		Percentage of income used for health	violin		
+chiefdom	inc3 Debt		If we look at debts expenses they are pretty low for Nimikoro and Gbense.	Chiefdom	Percentage use of income for debt over the year		Percentage of income providing used ofr debts	violin		
+chiefdom	gangpayment		In Sandor people seem to pay more for their gang	Chiefdom	How much did your supporter pay <br>for your gang for the last winning?		Payment for the gang per chiefdom	violin		50000000
+financemining	change_inc		When the mine site is prefinanced, people have less unstable incomes	Is your mine site prefinanced or supported?		How stable is your household's income	Income stability split by <br>prefinancing of the mine	bar		
+FCS	inc3 Family obligations		People with the lowest FCS scores seem to have more expenses related to family obligations	FCS category	Percentage of income spent on family obligations		Percentage of income spent on family obligations per FCS category	violin		50
+FCS	inc3 Health		This is also the case for health	FCS category	Percentage of income spent on family obligations		Percentage of income spent on family obligations per FCS category	violin		
+probs_1	inc Animal breeding		Almost all of those who get income form animal breeding during the dry season have seen their food situation worsenned because of COVID19	First most pressing problem	Pourcentage of income coming from <br>animal breeding in rainy season		Distribution of pourcentage of income from animal breeding per <br>feeling of deterioration of food security situation due to COVID 19	violin		
+richer	change_inc		The richer people consider themselves the more stable is their income	Overall, do you consider your household richer or <br> poorer than the people in this community?		How stable is your household's income	Stability of income according to auto estimation of wealthiness	bar		
+secondjob	FCS		Those with a second job have a lower FCS score	Over the year, do you have a second job?		FCS category	FCS category according to whether people have a second job	bar		
+minorprofile	value_ind		The profile of the minor plays an important rôle in the percentage of a stone's value theyreceive, individually, on average, for a normal (small) stone	Minor profile	percentage of stone value received		Percentage of stone value received per minor profile	violin		
+worsen	Hh total		Large households were more affected by the COVID crisis	Last year, has your food situation worsened because of Covid-19?	Household size		Distribution of household size according to whether food situation worsened because of Covid-19	violin		
+worsen	secondjob_days4		People earning money from a second job during rainy season seem less affected by the COVID	Last year, has your food situation worsened because of Covid-19?	Average money earned from second job <br> during rainy season		Distribution of money earned by second job over the rainy season according to whether food situation worsened because of Covid-19	violin		5000000
+year_joined	wealthy		They also seem to be a little whealthier than before	Which year did you join the GemFair program?		Do you think the GemFair program made your household less or more wealthy?	Effect of the gemfair program per year of joining the program	bar		
+minorprofile	FCS		Digger and mine site manager have among the lowest FCS scores	Minor profile		FCS category	FCS category per minor’s profile	bar		
+FCS	asset Mobile phone		People with many mobilephone at home are more likely to have lower FCS score	FCS category	Number of mobile phones owned		Distribution of mobile phones owned by the household per FCS category	violin		
+FCS	asset Smartphone		Again, people with many smartphone are more likely to have lower FCS score. They probably give more importance to phone than to food. Sensitization might be appropriate.	FCS category	Number of smartphones owned		Distribution of smartphones owned by the household per FCS category	violin		
+workingtime	wealthy		It seems that globaly for the same time worled people seems to get slightly more thanks to the gemfair program	Has your working time at the mine changed <br>since you joined the GemFair program?		Do you think the GemFair program made your household less or more wealthy?	Change in workingtime and impression<br> of wealth due to Gemfair program	bar		
+financemining	inc2 Mining	inc Mining	Minors who are not working on prefinanced or supproted mine sites rely more exclusively only on mining for income.	Is your mine site prefinanced or supported ?	Percentage of income coming from mining (dry and rainy season)		Percentage of income providing from mining according to <br>whether the mining site is prefinanced or supported	violin		
+year_joined	debt_amt		Minors working for gemfair have less debts	If you do, which year did you join the GemFair program?	How much debt do you currently have?		Debt level according to year person joined Gemfair	box		100000

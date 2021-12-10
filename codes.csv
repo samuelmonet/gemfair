@@ -22,10 +22,10 @@ rship	4	Co-wife
 rship	5	Son			
 rship	6	Daughter			
 rship	7	Other relative			
-marital	1	Married		1	white
-marital	2	Single		0	yellow
-marital	3	Divorced 		0	orange
-marital	4	Widowed  		0,5	darkgrey
+marital	1	Married		1.0	white
+marital	2	Single		0.0	yellow
+marital	3	Divorced 		0.0	orange
+marital	4	Widowed  		0.5	darkgrey
 chiefdom	1	Fiama			
 chiefdom	2	Gbane			
 chiefdom	3	GbaneKandor			
@@ -41,8 +41,8 @@ chiefdom	12	Soa
 chiefdom	13	Tankoro			
 chiefdom	14	Toli			
 chiefdom	15	 Koidu			
-setting	0	Urban		1	grey
-setting	1	Rural		0	green
+setting	0	Urban		1.0	grey
+setting	1	Rural		0.0	green
 mining_role	1	Casual labourer (kosovo)			
 mining_role	2	Digger			
 mining_role	3	Mine site manager			
@@ -53,16 +53,16 @@ year_joined	2	2019
 year_joined	3	2020			
 year_joined	4	2021			
 year_joined	99	Don't know			
-education	1	None		0	red
-education	2	Primary but incomplete		0,5	orange
-education	3	Primary complete		1	yellow
-education	4	Secondary incomplete		1,5	gold
-education	5	Secondary complete		2	lightgreen
-education	6	Post-secondary professional		2,5	grey
-education	7	Vocational		2	darkgrey
-education	8	First degree or more		3	green
-education	9	Koranic school		0,5	magenta
-education	99	Don't know		888	white
+education	1	None		0.0	red
+education	2	Primary but incomplete		0.5	orange
+education	3	Primary complete		1.0	yellow
+education	4	Secondary incomplete		1.5	gold
+education	5	Secondary complete		2.0	lightgreen
+education	6	Post-secondary professional		2.5	grey
+education	7	Vocational		2.0	darkgrey
+education	8	First degree or more		3.0	green
+education	9	Koranic school		0.5	magenta
+education	99	Don't know		888.0	white
 land_rights	1	Private ownership			
 land_rights	2	Shared ownership			
 land_rights	3	Rental (from owner)			
@@ -95,21 +95,21 @@ probs	2	Cost of food increasing
 probs	3	Less money to buy food			
 probs	4	Other (specify)			
 probs	99	Don't know			
-worsen	1	Yes, very much		-2	red
-worsen	2	Yes, a little bit		-1	orange
-worsen	3	Not really, because we received support		0	yellow
-worsen	4	Not really, because we weren't affected		1	green
-worsen	99	Don't know		888	grey
+worsen	1	Yes, very much		-2.0	red
+worsen	2	Yes, a little bit		-1.0	orange
+worsen	3	Not really, because we received support		0.0	yellow
+worsen	4	Not really, because we weren't affected		1.0	green
+worsen	99	Don't know		888.0	grey
 problems	1	Scarcity of food in the market			
 problems	2	Cost of food increasing			
 problems	3	Less money to buy food			
 problems	4	Other (specify)			
 problems	99	Don't know			
-food_situation	1	It is even worse than last year		-1	red
-food_situation	2	It is as bad as last year		0	orange
-food_situation	3	It is better than last year, but not yet back to normal		1	yellow
-food_situation	4	It is now back to normal		2	green
-food_situation	99	Don't know		888	grey
+food_situation	1	It is even worse than last year		-1.0	red
+food_situation	2	It is as bad as last year		0.0	orange
+food_situation	3	It is better than last year, but not yet back to normal		1.0	yellow
+food_situation	4	It is now back to normal		2.0	green
+food_situation	99	Don't know		888.0	grey
 watersource	1	Tap/piped water			
 watersource	2	Borehole			
 watersource	3	Protected well/spring			
@@ -136,12 +136,12 @@ ynd	3	Don't know
 change	1	Increased			
 change	2	Remained the same			
 change	3	Decreased			
-change_inc	1	Very unstable		-2	red
-change_inc	2	Unstable		-1	orange
-change_inc	3	Somewhat stable		0	yellow
-change_inc	4	Stable		1	lightgreen
-change_inc	5	Very stable		2	green
-change_inc	99	Don't know		888	grey
+change_inc	1	Very unstable		-2.0	red
+change_inc	2	Unstable		-1.0	orange
+change_inc	3	Somewhat stable		0.0	yellow
+change_inc	4	Stable		1.0	lightgreen
+change_inc	5	Very stable		2.0	green
+change_inc	99	Don't know		888.0	grey
 incomesource	1	Mining			
 incomesource	2	Agriculture			
 incomesource	3	Animal breeding			
@@ -173,42 +173,42 @@ support	5	Medicine or medical supplies
 support	6	Micro-loans			
 support	7	Other in-kind transfers (seeds, bednets, livestock)			
 support	99	Don't know			
-better	1	A lot worst off		-2	red
-better	2	A little worst off		-1	orange
-better	3	No big change		0	yellow
-better	4	A little better off		1	lightgreen
-better	5	A lot better off		2	green
-better	99	Don't know		888	grey
-richer	1	Much poorer		-2	red
-richer	2	A little poorer		-1	orange
-richer	3	Average		0	yellow
-richer	4	A little richer		1	lightgreen
-richer	5	Much richer		2	green
-richer	99	Don't know		888	grey
-wealthy	1	Much less wealthy		-2	red
-wealthy	2	A little less wealthy		-1	orange
-wealthy	3	No change		0	yellow
-wealthy	4	A little wealthier		1	lightgreen
-wealthy	5	A lot wealthier		2	green
-wealthy	99	Don't know		888	grey
-workingtime	1	I work much less		2	green
-workingtime	2	I work a little less		1	lightgreen
-workingtime	3	I work the same amount of time		0	yellow
-workingtime	4	I work a little more		-1	orange
-workingtime	5	I work much more		-2	red
-workingtime	99	Don't know		888	grey
+better	1	A lot worst off		-2.0	red
+better	2	A little worst off		-1.0	orange
+better	3	No big change		0.0	yellow
+better	4	A little better off		1.0	lightgreen
+better	5	A lot better off		2.0	green
+better	99	Don't know		888.0	grey
+richer	1	Much poorer		-2.0	red
+richer	2	A little poorer		-1.0	orange
+richer	3	Average		0.0	yellow
+richer	4	A little richer		1.0	lightgreen
+richer	5	Much richer		2.0	green
+richer	99	Don't know		888.0	grey
+wealthy	1	Much less wealthy		-2.0	red
+wealthy	2	A little less wealthy		-1.0	orange
+wealthy	3	No change		0.0	yellow
+wealthy	4	A little wealthier		1.0	lightgreen
+wealthy	5	A lot wealthier		2.0	green
+wealthy	99	Don't know		888.0	grey
+workingtime	1	I work much less		2.0	green
+workingtime	2	I work a little less		1.0	lightgreen
+workingtime	3	I work the same amount of time		0.0	yellow
+workingtime	4	I work a little more		-1.0	orange
+workingtime	5	I work much more		-2.0	red
+workingtime	99	Don't know		888.0	grey
 secondjob_name	1	Farming			
 secondjob_name	2	Animal breeding			
 secondjob_name	3	Trade or Services			
 secondjob_name	4	Construction or Technical (repairs etc.)			
 secondjob_name	5	Other (specify)			
 secondjob_name	99	Don't know			
-sitetime	1	Less than 1 month		0	
-sitetime	2	1 to 6 months		0,25	
-sitetime	3	6 to 12 months		0,75	
-sitetime	4	1 to 5 years		2	
-sitetime	5	I always worked at the same site		5	
-sitetime	99	Don't know		888	
+sitetime	1	Less than 1 month		0.0	
+sitetime	2	1 to 6 months		0.25	
+sitetime	3	6 to 12 months		0.75	
+sitetime	4	1 to 5 years		2.0	
+sitetime	5	I always worked at the same site		5.0	
+sitetime	99	Don't know		888.0	
 nolicense	1	It is too expensive			
 nolicense	2	It is too complicated			
 nolicense	3	In practice nobody checks, so I Don't need one			
@@ -243,16 +243,16 @@ buyers	4	Two or three, including GemFair
 buyers	5	More than three			
 buyers	6	More than three, including GemFair			
 buyers	99	Don't know			
-price_vary1	1	Not really		0	green
-price_vary1	2	A little		1	orange
-price_vary1	3	A lot		2	red
-price_vary1	4	A little for some types of stones, a lot for other types		0,5	yellow
-price_vary1	99	Don't know		888	grey
-price_vary2	1	Not really		0	green
-price_vary2	2	A little		1	orange
-price_vary2	3	A lot		2	red
-price_vary2	4	A little for some types of stones, a lot for other types		0,5	yellow
-price_vary2	99	Don't know		888	grey
+price_vary1	1	Not really		0.0	green
+price_vary1	2	A little		1.0	orange
+price_vary1	3	A lot		2.0	red
+price_vary1	4	A little for some types of stones, a lot for other types		0.5	yellow
+price_vary1	99	Don't know		888.0	grey
+price_vary2	1	Not really		0.0	green
+price_vary2	2	A little		1.0	orange
+price_vary2	3	A lot		2.0	red
+price_vary2	4	A little for some types of stones, a lot for other types		0.5	yellow
+price_vary2	99	Don't know		888.0	grey
 accident	1	Crushing injury			
 accident	2	Hit by a flying object 			
 accident	3	Hit by someone			
@@ -260,11 +260,11 @@ accident	4	 Falling
 accident	5	Squashing/jamming of body part in machinery			
 accident	6	Other: specify			
 accident	99	 Don't know			
-debt_freq	1	Never or almost never		0	green
-debt_freq	2	A few times		0,5	yellow
-debt_freq	3	Many times		1	orange
-debt_freq	4	Very often or always		1,5	red
-debt_freq	99	Don't know		888	grey
+debt_freq	1	Never or almost never		0.0	green
+debt_freq	2	A few times		0.5	yellow
+debt_freq	3	Many times		1.0	orange
+debt_freq	4	Very often or always		1.5	red
+debt_freq	99	Don't know		888.0	grey
 csi	1	Quite often/ consistently			
 csi	2	Sometimes			
 csi	3	Not too often/ A few times			
@@ -272,13 +272,13 @@ csi	4	Rarely/Never
 csi	99	Don't know			
 currency	sll	Sierra Leonean Leone			
 currency	usd	USD			
-leveloffinancing	1	It has decreased a lot		-2	red
-leveloffinancing	2	It has decreased a little		-1	orange
-leveloffinancing	3	There hasn't been much change		0	yellow
-leveloffinancing	4	It has increased a little		1	lightgreen
-leveloffinancing	5	It has increased a lot		2	green
-leveloffinancing	99	Don't know		888	grey
-leveloffinancing		0		888	darkgrey
+leveloffinancing	1	It has decreased a lot		-2.0	red
+leveloffinancing	2	It has decreased a little		-1.0	orange
+leveloffinancing	3	There hasn't been much change		0.0	yellow
+leveloffinancing	4	It has increased a little		1.0	lightgreen
+leveloffinancing	5	It has increased a lot		2.0	green
+leveloffinancing	99	Don't know		888.0	grey
+leveloffinancing		0		888.0	darkgrey
 coverdailywage	1	Meals			
 coverdailywage	2	Transport			
 coverdailywage	3	Medical care			
@@ -291,6 +291,6 @@ minorprofile	5	Licence Holder
 yesnodkf10	1	Yes			
 yesnodkf10	2	No			
 yesnodkf10	3	Currently applying for one			
-FCS		Acceptable		2	green
-FCS		Borderline		1	yellow
-FCS		Poor		0	red
+FCS		Acceptable		2.0	green
+FCS		Borderline		1.0	yellow
+FCS		Poor		0.0	red

@@ -1,0 +1,30 @@
+variable_x	variable_y	variable_y2	description	xtitle	ytitle	legendtitle	title	graphtype	filtermin	filtermax
+chiefdom	inc2 Agriculture	inc Agriculture		Chiefdom	Pourcentage of income from agriculture in the rainy season			violin		
+chiefdom	inc2 Sales & Trade (non-mining)	inc Sales & Trade (non-mining)		Chiefdom	Pourcentage of income from sales and trade in the rainy season			violin		
+chiefdom	inc2 Debt	inc Debt		Chiefdom	Pourcentage of income from debt in the rainy season			violin		
+chiefdom	inc2 Mining	inc Mining	In Nimikoro people rely more on agriculture during the rainy season. They do not rely at all on debt or sales and trades. In Sandor, mining represents a higher part of the incomes during rainy season.	Chiefdom	Pourcentage of income from mining in the rainy season			violin		
+chiefdom	inc3 Health			Chiefdom	Percentage use of income for health over the year			violin		
+chiefdom	inc3 Debt		Once again we can see that in Nimikoro there is no problems of debts. We see also that health seems more of a problem in Kamara and Nimiyama	Chiefdom	Percentage use of income for debt over the year			violin		
+chiefdom	FCS		In Kamara people seem a little bit more vulnerable	Chiefdom				bar		
+chiefdom	gangpayment		In Sandor people seem to pay more for their gang					violin		
+financemining	change_inc		When the mine site is prefinanced, people have less unstable incomes	Is your mine site prefinanced or supported?		How stable is your household's income	Income stability split by <br>prefinancing of the mine	bar		
+gf_site	difference		Workers in gemfair seems to have had more decrease in their daily wages		Daily wage		Difference of daily wages between now and one year ago	violin	-50000	50000
+gf_site	bad_carats		On bad mine sites, people expect more carats if they are not working with Gemfair	Do you work on a GemFair mine site?	How many carats do you expect to get <br> from a BAD mine site		Expectation from bad mine sites	violin		30
+FCS	inc3 Family obligations		People with the lowest FCS scores seem to have more expenses related to family obligations	FCS category	Percentage of income spent on family obligations		Percentage of income spent on family obligations per FCS category	violin		50
+FCS	inc3 Health		This is also the case for health	FCS category	Percentage of income spent on family obligations		Percentage of income spent on family obligations per FCS category	violin		
+incomesource_1	richer		Those living pricipaly from agriculture and mining consider themselves globaly poorer than the rest of the community					bar		
+incomesource_1	FCS		This is confirmed if we look at the FCS score					bar		
+probs_1	inc Animal breeding		almost all of those who get income form animal breeding during the dry season have seen their food situation worsenned because of COVID19	First most pressing problem	Pourcentage of income coming from animal breeding in rainy season			violin		
+richer	change_inc		The richer people consider themselves the more stable is their income					bar		
+secondjob	FCS		Those with a second job have a lower FCS score					bar		
+minorprofile	value_ind		The profile of the minor plays an important rôle in the percentage of a stone's value do you receive, individually, on average, for a normal (small) stone					violin		
+worsen	Hh total		Large households were more affected by the COVID crisis					violin		
+worsen	secondjob_days4		people earning money from a second job during rainy season seem less affected					violin		
+year_joined	workingtime		People who joined the gemfair program seems to work a little more than before (specialy those who joined more recently)					bar		
+year_joined	wealthy		They also seem to be a little whealthier than before					bar		
+minorprofile	FCS							bar		
+FCS	asset Mobile phone							violin		
+FCS	asset Smartphone		People with many smartphone or mobilephone at home are more likely to have lower FCS score					violin		
+workingtime	wealthy		It seems that globaly for the same time worled people seems to get slightly more thanks to the gemfair program					bar		
+financemining	inc2 Mining	inc Mining	not finance mining rely more exclusively on mining					violin		
+year_joined	debt_amt							violin		
